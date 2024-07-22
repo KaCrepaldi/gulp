@@ -10,7 +10,8 @@
   "author": "Karla Crepaldi",
   "license": "ISC",
   "devDependencies": {
-    "gulp" : "^5.0.0"
+    "gulp": "^5.0.0",
+    "gulp-strip-css-comments": "^3.0.0"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
