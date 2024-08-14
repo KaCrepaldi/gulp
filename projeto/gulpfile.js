@@ -74,4 +74,5 @@ function tarefasHTML(callback){
 exports.styles = tarefasCSS
 exports.scripts = tarefasJS
 exports.images = tarefasImagem
+exports.default = series( tarefasHTML, tarefasJS, tarefasCSS)
 
