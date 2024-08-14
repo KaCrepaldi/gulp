@@ -4,6 +4,8 @@ const cssmin = require('gulp-cssmin')
 const rename = require('gulp-rename')
 const uglify = require('gulp-uglify')
 const image = require('gulp-image')
+const stripJs = require('gulp-strip-comments')
+const stripCss = require('gulp-strip-css-comments')
 
 function tarefasCSS(cb) {
     
@@ -15,10 +17,11 @@ function tarefasCSS(cb) {
         '.src/css/style.css'
 
     ])
-        .pipe(concat('styles.css'))
-        .pipe(cssmin())
-        .pipe(rename({ suffix: 'min'}))  // libs.min.css
-        .pipe(gulp.dest('./dist/css'))
+        .pipe(stripCss())    // remove comentários
+        .pipe(concat('styles.css'))  //mescla arquivos
+        .pipe(cssmin())     //minifiva css
+        .pipe(rename({ suffix: 'min'}))  // style.min.css
+        .pipe(gulp.dest('./dist/css'))  // cria arquivo em novo diretório
 }
 
 function tarefaJS(){
@@ -53,11 +56,22 @@ function tarefasImagem(){
             concurrent: 10,
             quiet: true
         }))
-        .pipe(gulp.dest('./projeto/images'))
+        .pipe(gulp.dest('./dist/imagens'))
 
+}   
+
+// POC - Proof of Concept
+function tarefasHTML(callback){
+    
+    gulp.src('./src/**/*.html')
+    .pipe(htmlmin({ collapseWhitespace: true}))
+    .pipe(gulp.dest('./dist'))
+
+    return callback()
 }
 
 
 exports.styles = tarefasCSS
 exports.scripts = tarefasJS
 exports.images = tarefasImagem
+
