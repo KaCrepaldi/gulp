@@ -1,15 +1,16 @@
+const { series} = require('gulp')
 const gulp = require('gulp')
 const concat = require('gulp-concat')
 const cssmin = require('gulp-cssmin')
 const rename = require('gulp-rename')
 const uglify = require('gulp-uglify')
-const image = require('gulp-image')
+const image = require('gulp-imagemin')
 const stripJs = require('gulp-strip-comments')
 const stripCss = require('gulp-strip-css-comments')
 
-function tarefasCSS(cb) {
+function tarefasCSS(callback) {
     
-    return gulp.src([
+    gulp.src([
         './node_modules/bootstrap/css/bootstrap.css',
         './owl/css/owl.css',
         './node_modules/@fortawesome/fontawesome-free/css/fontawesome.css',
@@ -22,11 +23,17 @@ function tarefasCSS(cb) {
         .pipe(cssmin())     //minifiva css
         .pipe(rename({ suffix: 'min'}))  // style.min.css
         .pipe(gulp.dest('./dist/css'))  // cria arquivo em novo diretório
+
+     cb()   
+
+
 }
 
-function tarefaJS(){
 
-    return gulp.src([
+
+function tarefaJS(callback){
+
+     gulp.src([
         './node_modules/jquery/jQuery.js',
         './node_modules/bootstrap/js/bootstrap.js',
         './owl/js/owl.js',
@@ -74,5 +81,6 @@ function tarefasHTML(callback){
 exports.styles = tarefasCSS
 exports.scripts = tarefasJS
 exports.images = tarefasImagem
-exports.default = series( tarefasHTML, tarefasJS, tarefasCSS)
+
+exports.default = parallel( tarefasHTML, tarefasJS, tarefasCSS)
 
